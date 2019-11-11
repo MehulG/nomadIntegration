@@ -1,0 +1,9 @@
+<div *ngFor="let node of tree">
+    <div class="{{ node.type }}" (click)="display(node)">
+        <span *ngFor="let a of node.path">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <mat-icon *ngIf="node.type=='dir'" mat-list-icon>folder</mat-icon>
+        <mat-icon *ngIf="node.type=='file'" mat-list-icon>description</mat-icon>
+        {{node.name}}
+    </div>
+    <!-- <mat-icon mat-list-icon (click) = "hide(node.path)">highlight_off</mat-icon> -->
+</div>

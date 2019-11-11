@@ -5,14 +5,16 @@
       [opened]="(!isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+      <a mat-list-item href="/User">Profile</a>
+      <a mat-list-item href="/article/new">Article</a>
+      <a mat-list-item href="/home">Assignment</a>
+      <a mat-list-item href="/">Logout</a>
+
+      
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar class="Toolbar" color="primary" style="z-index: 99999999;">
-      <div>
+    <mat-toolbar color="primary">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -34,13 +36,8 @@
     </form>
   </div>
 
-    </mat-toolbar>
-
-    
-   
-    <!-- Add Content Here -->
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-
-
+  <button mat-raised-button (click)="login()">Login</button>
+</mat-toolbar>
+<router-outlet></router-outlet>
+</mat-sidenav-content>
 </mat-sidenav-container>

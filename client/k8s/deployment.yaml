@@ -15,11 +15,7 @@ spec:
         run: frontend
     spec:
       containers:
-<<<<<<< HEAD
       - image: mmmehulll/codebit_client:0.1.0
-=======
-      - image: mmmehulll/codebit_client
->>>>>>> 34a8bd493d63605a2b4bb93adba3677610d2fba7
         name: frontend
         ports:
         - containerPort: 80

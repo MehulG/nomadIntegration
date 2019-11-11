@@ -7,6 +7,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SearchService } from 'src/app/services/search.service';
 
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -42,6 +43,8 @@ export class AppComponent {
 
   constructor(private breakpointObserver: BreakpointObserver,
     private router: Router, 
-    private searchService: SearchService
+    private searchService: SearchService,
+    private authService: AuthService
+
 ) {}
 }

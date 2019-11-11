@@ -1,0 +1,41 @@
+version: '3.2'
+services:
+
+ mongo:
+   image: mongo:4.2
+   volumes:
+     - mongo_data:/data/db
+   environment:
+     MONGO_INITDB_ROOT_USERNAME: admin
+     MONGO_INITDB_ROOT_PASSWORD: password
+
+ server:
+   build:
+     context: ./server
+     dockerfile: Dockerfile
+   ports:
+     - "5001:443"
+     - "5000:80"
+   links:
+     - "mongo:database"
+   depends_on:
+     - mongo
+   environment:
+     DBConnectionString: mongodb://admin:password@mongo/admin
+     DBName: CodebitDB
+
+
+ client:
+   build:
+     context: ./client
+     dockerfile: Dockerfile
+   ports:
+     - "8080:80"
+   volumes:
+     - ./client/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+     
+volumes:
+ mongo_data:
+   driver: local
+
+

@@ -11,13 +11,13 @@ import {EditUserComponent} from './components/edit-user/edit-user.component';
 import { ArticlesComponent } from './components/articles/articles.component';
 import {DisplayResultsComponent} from './../app/components/display-results/display-results.component';
 import { FilterByTagsComponent } from './components/filter-by-tags/filter-by-tags.component';
-
+import { ViewAssignmentComponent } from './components/view-assignment/view-assignment.component'
+import { AssignmentNewComponent } from './components/assignment-new/assignment-new.component';
 
 
 const routes: Routes = [
 
   { path: 'editor', component: CodeEditorComponent },
-  { path: 'assignment/new', component: CreateAssignmentComponent },
   { path: 'home', component: HomeComponent },
   { path: 'user/:id', component: UserDetailsComponent },  
   { path: 'editUser/:id', component: EditUserComponent },
@@ -46,6 +46,10 @@ const routes: Routes = [
     path:"home",
     component: HomeComponent
   }
+  { path: 'editor', component: CodeEditorComponent },
+  { path: 'assignment/new', component: AssignmentNewComponent },
+  { path: 'assignment/edit/:id', component: CreateAssignmentComponent },
+  { path : 'assignment/:userid/:assignmentid', component: ViewAssignmentComponent }
 ];
 
 @NgModule({

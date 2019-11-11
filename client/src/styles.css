@@ -8,3 +8,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .overflow-guard{
   height: 100% !important;
 }
+
+.INSERT {
+	
+    	
+  background-color:  red !important;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+  font-style: oblique;
+  }
+
+  .NEWINSERT {
+	
+    	
+    background-color: #1E1E1E !important;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: oblique;
+    }

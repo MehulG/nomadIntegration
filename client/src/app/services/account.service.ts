@@ -25,7 +25,7 @@ export class AccountService {
   }
 
   login() {
-    this.document.location.href = "http://localhost:5000/account/SignInWithGitHub";
+    this.document.location.href = "http://localhost:5000/account/login";
   }
 
   logout() {

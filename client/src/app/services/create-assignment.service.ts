@@ -18,6 +18,8 @@ import { stringify } from '@angular/compiler/src/util';
 })
 export class CreateAssignmentService {
 
+  private access_token = '440fc5c22177d9966d5cce0b4cb7124eab48eddb';
+  
 
 
   contents: any[] = []
@@ -34,24 +36,30 @@ export class CreateAssignmentService {
   //   }
   // }
 
-  getFolder(username: string, repo: string, path: string = '') {
-    //  console.log("fhgjhkj");
-    return this.http.get<any>(`https://api.github.com/repos/${username}/${repo}/contents/${path}?client_id=${environment.GITHUB_API_CLIENT_ID}`)
-  }
+  getFolder(username: string, repo: string, path: string = ''){
+  //  console.log("fhgjhkj");
+    return this.http.get<any>(`https://api.github.com/repos/${username}/${ repo }/contents/${ path }?access_token=${ this.access_token }`)
+    // return this.http.get<any>(`https://api.github.com/repos/${username}/${ repo }/contents/${ path }?client_id=${ environment.GITHUB_API_CLIENT_ID }`)
+ }
 
-  getFolderTree(username: string, repo: string, path: string = '') {
+  getFolderTree(username: string, repo: string, path: string = ''){
+  
+    // let a: any;
+    // let subject = new BehaviorSubject(a);
 
     let content: any;
-    return this.http.get<any>(`https://api.github.com/repos/${username}/${repo}/contents/${path}?client_id=${environment.GITHUB_API_CLIENT_ID}`)
+  //  return this.http.get<any>(`https://api.github.com/repos/${username}/${ repo }/contents/${ path }?client_id=${ environment.GITHUB_API_CLIENT_ID }`)
+    return this.http.get<any>(`https://api.github.com/repos/${username}/${ repo }/contents/${ path }?access_token=7369e24e4b5496207309254b3f6005e450b79423`)
+
       .pipe(
         concatMap((a) => {
           // console.log(a);
           let source = from(a);
           return source.pipe(
-            map((data: any) => {
-              if (data.type == 'dir') {
+            map((data:any) => {
+              if(data.type == 'dir') {
                 data.child = this.getFolderTree(username, repo, `${path}/${data.name}`)
-                // .subscribe(b => data.children = b);
+                  // .subscribe(b => data.children = b);
                 data.children = [];
               }
               // console.log(data);
@@ -62,19 +70,33 @@ export class CreateAssignmentService {
       );
 
     // return subject;
-
+    
   }
-  getraw(url) {
+  getraw(url){
     console.log(url);
-
+    
     return this.http.get(url,
-      { responseType: 'text' })
-
+      {responseType: 'text'})
+    
   }
-  post(obj) {
-    this.http.post("http://localhost:5000/api/Assignment", obj).subscribe(
+  post(obj){
+    this.http.post("http://localhost:5000/api/Assignment",obj).subscribe(
+     
       res => console.log("saved in db")
-
+      
     );
+  }
+
+  edit(id, obj) {
+    return this.http.put(`${ environment.apiUrl }/assignment/${ id }`, obj);
+  }
+
+  getAssignment(id: string): Observable<any> {
+    return this.http.get(`${ environment.apiUrl }/assignment/${id}`);
+  }
+
+  create(obj): Observable<any> {
+    console.log(obj);
+    return this.http.post("http://localhost:5000/api/assignment",obj)
   }
 }

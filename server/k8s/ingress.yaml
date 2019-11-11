@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-backend
+  annotations:
+    # use the shared ingress-nginx
+    # nginx.org/rewrites: "serviceName=backend rewrite=/;"
+    # kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - host: codebit-172-17-187-91.nip.io
+    http:
+      paths:
+      - path: /backend/?(.*)
+        backend:
+          serviceName: backend
+          servicePort: 80

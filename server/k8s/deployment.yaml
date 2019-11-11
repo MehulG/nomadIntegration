@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: backend
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: backend
+  template:
+    metadata:
+      labels:
+        run: backend
+    spec:
+      containers:
+      - image: kaustubhkagrawal/codebit_server:0.1.1
+        name: backend
+        env:
+        - name: DBConnectionString
+          value: "mongodb://admin:password@mongodb/admin"
+        - name: DBName
+          value: "CodebitDB"
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: mongodb
+  name: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: mongodb
+  template:
+    metadata:
+      labels:
+        run: mongodb
+    spec:
+      containers:
+      - image: mongo
+        name: mongodb
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: "admin"
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: "password"
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-volume
+          subPath: db
+      volumes:
+      - name: mongo-volume
+        persistentVolumeClaim:
+          claimName: myclaim-pvc

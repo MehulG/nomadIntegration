@@ -2,32 +2,43 @@
   <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="true">
     <br>
-    <div>
-         <button mat-stroked-button (click)="openDialog()" id="import">Import</button>
-   </div>
-    <div *ngFor="let item of tree">
+    <!-- <div *ngFor="let item of tree">
 
-      <div class="FileStructure">
-        <div  (click)="getchild(item.path)">
-        <div (click)="display(item)" id="{{item.path}}">
+      <div class="FileStructure" >
+        <div  (click)="getchild(item)">
+        <div (click)="display(item)" id="{{item.path}}"  >
           <span *ngFor="let a of item.path.split('/')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <mat-icon *ngIf="item.type=='dir'" mat-list-icon >folder</mat-icon>
+            <mat-icon *ngIf="item.type=='dir'"  mat-list-icon >folder</mat-icon>
             <mat-icon *ngIf="item.type=='file'" mat-list-icon>insert_drive_file</mat-icon>
           {{item.name}}
 
 
         </div>
       </div>
-      <mat-icon mat-list-icon (click) = "hide(item.path)">highlight_off</mat-icon>
-    </div>
 
+      <mat-icon mat-list-icon (click) = "hide(item.path)">highlight_off</mat-icon>
+    </div> -->
+
+    <div *ngFor="let node of tree" >
+      <!-- <div id="{{getPathId(node.path, node.type)}}" class="{{ node.type }}" (click)="display(node)"> -->
+      <div id="{{getPathId(node.path, node.type)}}" [className]="(hiddenfiles.indexOf(node.path) == -1)?'':'hide'" (click)="display(node)">
+        <span *ngFor="let a of node.path.split('/')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <mat-icon *ngIf="node.type=='dir'" mat-list-icon>folder</mat-icon>
+        <mat-icon *ngIf="node.type=='file'" mat-list-icon>description</mat-icon>
+        {{node.name}}
+        <!-- <mat-icon mat-list-icon (click) = "hide(node.path)">highlight_off</mat-icon> -->
+      </div>
+      <mat-icon mat-list-icon (click) = "toggle(node)">highlight_off</mat-icon>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <div style="height: 80vh">
-      <ngx-monaco-editor style="height: 100%;" [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+      <ngx-monaco-editor style="height: 100%;" [options]="editorOptions" [(ngModel)]="code" (onInit)="onInit($event)" (onDidChangeModelDecorations)="change($event)" >
+      </ngx-monaco-editor>
     </div>
-    
+    <button (click)="viewOnly()">viewOnly</button>
+    <!-- <button (click)="Done()">EditsDone</button> -->
+    <button (click)="Editable()">UpdateEdits </button>
     <button mat-raised-button color="primary" id="button" (click)="save()">Save</button>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -1,0 +1,78 @@
+<div class="container">
+    <h2 class="mat-h2">Create a New Assignment</h2>
+    <div class="mat-divider"></div>
+
+    <mat-vertical-stepper [linear]="true" #stepper>
+        <mat-step [stepControl]="basicFormGroup">
+            <form [formGroup]="basicFormGroup">
+                <ng-template matStepLabel>Basic Information</ng-template>
+                <mat-form-field>
+                    <input matInput placeholder="Title" formControlName="title" required>
+                </mat-form-field><br />
+
+                <mat-form-field class="example-chip-list">
+                    <mat-chip-list #chipList aria-label="Tags">
+                        <mat-chip *ngFor="let tag of tags" [selectable]="false" [removable]="true"
+                            (removed)="remove(tag)">
+                            {{tag}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="Tags" [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                            (matChipInputTokenEnd)="add($event)" matInput #tag>
+                        <input type="text"  formControlName="tags" style="display: none;">
+                    </mat-chip-list>
+                </mat-form-field>
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup" (ngSubmit)="createAssignment()">
+                <ng-template matStepLabel>Import Assignment</ng-template>
+                <mat-form-field>
+                    <mat-label>Username</mat-label>
+                    <input matInput formControlName="username" required>
+                </mat-form-field><br>
+                <mat-form-field>
+                    <!-- <span matPrefix>{{ username }}/</span> -->
+                    <mat-label>Repository</mat-label>
+                    <mat-select formControlName="repo">
+                        <mat-option *ngFor="let repo of repos" [value]="repo.name">
+                            {{repo.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button type="submit" matStepperNext color="primary">Create Assignment</button>
+                </div>
+            </form>
+        </mat-step>
+        <!-- <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Permissions</ng-template>
+                <app-folder-tree *ngIf="this.firstFormGroup.value.repo" [username]="this.username"
+                    [repo]="this.firstFormGroup.value.repo" [path]="" [tree]="tree" (treeChanged)="treeUpdate($event)">
+                </app-folder-tree>
+                <div *ngIf="!this.firstFormGroup.value.repo">
+                    <h3 class="mat-h3">Permissions</h3>
+                    <p class="mat-caption" style="color: red;">First Select the Repository to import in as assignment.</p>
+                </div>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext color="primary">Create Assignment</button>
+                </div>
+            </form>
+        </mat-step> -->
+        <!-- <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            You are now done.
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+            </div>
+        </mat-step> -->
+    </mat-vertical-stepper>
+</div>

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 apiVersion: extensions/v1beta1
-=======
-apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
->>>>>>> 34a8bd493d63605a2b4bb93adba3677610d2fba7
 kind: Ingress
 metadata:
   name: ingress-frontend
@@ -10,17 +6,10 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
-<<<<<<< HEAD
   - host: codebit-172-17-187-91.nip.io
     http:
       paths:
       - path: /?(.*)
-=======
-  - host: codebit-192-168-180-166.nip.io
-    http:
-      paths:
-      - path: /|/(.+)
->>>>>>> 34a8bd493d63605a2b4bb93adba3677610d2fba7
         backend:
           serviceName: frontend
           servicePort: 80

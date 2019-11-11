@@ -1,0 +1,51 @@
+<!-- <ng-template  ngIf="tree">
+    <div *ngFor="let item of tree">
+        <div class="FileStructure">
+            <div>
+                <div id="{{item.path}}">
+                    <span *ngFor="let a of item.path.split('/')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <mat-icon *ngIf="item.type=='dir'" mat-list-icon>folder</mat-icon>
+                    <mat-icon *ngIf="item.type=='file'" mat-list-icon>insert_drive_file</mat-icon>
+                    {{item.name}}
+                </div>
+            </div>
+            <mat-icon mat-list-icon (click)="hide(item.path)">highlight_off</mat-icon>
+        </div>
+    </div>
+</ng-template> -->
+
+
+<!-- <mat-tree *ngIf="tree">
+    <ng-template *ngFor="let node of tree">
+        <mat-tree-node *ngIf="node.type=='dir'">
+            <mat-icon *ngIf="node.type=='dir'" mat-list-icon>folder</mat-icon>
+            <mat-icon *ngIf="node.type=='file'" mat-list-icon>insert_drive_file</mat-icon>
+            {{ node.name }}
+        </mat-tree-node>
+    </ng-template>
+</mat-tree> -->
+
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+        <button mat-icon-button disabled></button>
+        <mat-icon class="type-icon" [attr.aria-label]="node.type + 'icon'">
+            {{ node.type === 'file' ? 'description' : 'folder' }}
+        </mat-icon>
+        {{node.name}}
+    </mat-tree-node>
+    <!-- <ng-template ngIf="false"> -->
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" (click)="loadMore()">
+                <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+            </button>
+            <mat-icon class="type-icon" [attr.aria-label]="node.type + 'icon'">
+                {{ node.type ==='file' ? 'description' : 'folder' }}
+            </mat-icon>
+            {{node.name}}
+            <app-fs-tree *ngIf="loaded" [username]="this.username" [repo]="this.repo" [path]="node.path" [tree]="node.children" (treeChanged)="treeUpate($event, node)"></app-fs-tree>
+            <!-- <app-fs-tree [username]="this.username" [repo]="this.repo" [path]="node.path" [(tree)]="node.children"></app-fs-tree> -->
+        </mat-tree-node>
+    <!-- </ng-template> -->
+</mat-tree>

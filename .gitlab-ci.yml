@@ -1,0 +1,55 @@
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+stages:
+  - test
+  - build
+  - deploy
+frontend-test:
+  image: zenika/alpine-chrome:with-node
+  stage: test
+  script:
+    - docker info
+    - cd client
+    - npm install
+    - npm run test-headless
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+    policy:
+      push
+
+backend-test:
+  image: microsoft/dotnet:2.2-sdk
+  stage: test
+  script:
+    - cd server
+    - cd Api.Tests
+    - dotnet test
+
+frontend-build:
+  image: node:lts-alpine
+  stage: build
+  script:
+    - cd client
+    - npm build
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+    policy: pull
+    
+backend-build:
+  image: microsoft/dotnet:2.2-sdk
+  stage: build
+  script:
+    - cd ./server/Api
+    - dotnet build
+# frontend-deploy:
+#   image: microsoft/dotnet:2.2-sdk
+#   stage: build
+#   script:
+#     - docker info
