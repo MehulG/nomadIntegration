@@ -30,7 +30,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { GithubLinkFormComponent } from './components/github-link-form/github-link-form.component';
 import { GithubContentComponent } from './components/github-content/github-content.component';
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
-import { CreateAssignmentComponent, DialogOverviewExampleDialog } from './components/create-assignment/create-assignment.component';
+import { CreateAssignmentComponent } from './components/create-assignment/create-assignment.component';
 import { MatCardModule } from '@angular/material/card';
 import { TreeModule } from 'angular-tree-component';
 import { HomeComponent } from './components/home/home.component';
@@ -47,12 +47,22 @@ import { DisplayResultsComponent } from './components/display-results/display-re
 import { FilterByTagsComponent } from './components/filter-by-tags/filter-by-tags.component';
 
 
-import {MatChipsModule} from '@angular/material/chips';
 import { ViewAssignmentComponent } from './components/view-assignment/view-assignment.component';
 import { AssignmentNewComponent } from './components/assignment-new/assignment-new.component';
 import { FolderTreeComponent } from './components/folder-tree/folder-tree.component';
 import { FsTreeComponent } from './components/fs-tree/fs-tree.component';
 import {MatTreeModule} from '@angular/material/tree';
+
+
+import { JwtModule } from "@auth0/angular-jwt";
+import Cookies from 'js-cookie';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+
+export function tokenGetter() {
+  return Cookies.get('jwt');
+}
+
+
 
 @NgModule({
   declarations: [
@@ -65,18 +75,18 @@ import {MatTreeModule} from '@angular/material/tree';
     CodeEditorComponent,
     CreateAssignmentComponent,
     HomeComponent,
-    DialogOverviewExampleDialog,
     DialogOverviewDialog,
     AttemptAssignmentComponent,
     UserDetailsComponent,
     EditUserComponent,
     ArticlesComponent,
     DisplayResultsComponent,
-    FilterByTagsComponent
+    FilterByTagsComponent,
     ViewAssignmentComponent, 
     AssignmentNewComponent,
     FolderTreeComponent,
-    FsTreeComponent
+    FsTreeComponent,
+    LandingPageComponent
   ],
 
   imports: [
@@ -115,9 +125,17 @@ import {MatTreeModule} from '@angular/material/tree';
     MatStepperModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    MatTreeModule
+    MatTreeModule, 
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ["localhost:5000"],
+        // blacklistedRoutes: ["example.com/examplebadroute/"]
+      }
+    })
+
   ],
-  entryComponents: [DialogOverviewExampleDialog, DialogOverviewDialog],
+  // entryComponents: [DialogOverviewExampleDialog, DialogOverviewDialog],
 
 
   providers: [],

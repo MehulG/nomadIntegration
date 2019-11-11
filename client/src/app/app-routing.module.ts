@@ -13,11 +13,17 @@ import {DisplayResultsComponent} from './../app/components/display-results/displ
 import { FilterByTagsComponent } from './components/filter-by-tags/filter-by-tags.component';
 import { ViewAssignmentComponent } from './components/view-assignment/view-assignment.component'
 import { AssignmentNewComponent } from './components/assignment-new/assignment-new.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+
+
+
+import {AuthGuardService as AuthGuard} from './services/auth-guard.service';
+
 
 
 const routes: Routes = [
-
-  { path: 'editor', component: CodeEditorComponent },
+  { path: '', component: LandingPageComponent}, 
+  { path: 'editor', component: CodeEditorComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'user/:id', component: UserDetailsComponent },  
   { path: 'editUser/:id', component: EditUserComponent },
@@ -45,7 +51,7 @@ const routes: Routes = [
   {
     path:"home",
     component: HomeComponent
-  }
+  },
   { path: 'editor', component: CodeEditorComponent },
   { path: 'assignment/new', component: AssignmentNewComponent },
   { path: 'assignment/edit/:id', component: CreateAssignmentComponent },
