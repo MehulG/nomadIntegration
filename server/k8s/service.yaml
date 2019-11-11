@@ -2,27 +2,27 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: backend
-  name: backend
+    run: account_app
+  name: account_app
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 80
   selector:
-    run: backend
+    run: account_app
   type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: mongodb
-  name: mongodb
+    run: account_db
+  name: account_db
 spec:
   ports:
   - port: 27017
     protocol: TCP
     targetPort: 27017
   selector:
-    run: mongodb
+    run: account_db

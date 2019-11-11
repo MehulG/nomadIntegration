@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ingress-backend
+  name: ingress-account
   annotations:
     # use the shared ingress-nginx
     # nginx.org/rewrites: "serviceName=backend rewrite=/;"
@@ -9,10 +9,12 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
-  - host: codebit-172-17-187-91.nip.io
+  # - host: codebit-172-17-187-91.nip.io
+  # - host: api.cgi-w3.stackroute.io
+  - host: codebit.app.cgi-w3.stackroute.io
     http:
       paths:
-      - path: /backend/?(.*)
+      - path: /account/?(.*)
         backend:
-          serviceName: backend
+          serviceName: account_app
           servicePort: 80
