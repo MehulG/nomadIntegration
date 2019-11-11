@@ -4,24 +4,30 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using api.RabbitMQ;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 
 
 namespace Api.Controllers
 {
     [Route("Api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class ValuesController : ControllerBase
     {
         // GET Api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<string> Get()
         {
             string[] array1 = { "this", "is", "codebit" };
             //EmitLog Emit = new EmitLog(array1);
-            return Ok(array1);
+            return Ok("Hello");
         }
 
         // GET Api/values/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
