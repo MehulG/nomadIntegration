@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import Cookies from 'js-cookie';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 
@@ -15,6 +15,9 @@ export class AuthService {
   private COOKIENAME = 'jwt';
 
   helper = new JwtHelperService();
+
+  private isLogged: boolean = false;
+  public loggedSubject: BehaviorSubject<boolean> = new BehaviorSubject(this.isLogged);
 
   private user: any = {};
   public authSubject: BehaviorSubject<any> = new BehaviorSubject(this.user);
@@ -44,11 +47,15 @@ export class AuthService {
   }
 
   
-  public isLoggedIn():boolean {
+  public isLoggedIn():Observable<any> {
     if(this.jwtExists()) {
-      return !this.extractJWT().isExpired;
+      this.isLogged = !this.extractJWT().isExpired;
+      this.loggedSubject.next(this.isLogged); 
+      return this.loggedSubject;
     } else {
-      return false;
+      this.isLogged = false;
+      this.loggedSubject.next(this.isLogged); 
+      return this.loggedSubject;
     }
   }
 
@@ -72,15 +79,19 @@ export class AuthService {
     if(this.jwtExists()) {
       this.user = this.extractJWT();
       this.authSubject.next(this.user);
+      this.isLogged = true;
+      this.loggedSubject.next(this.isLogged);
       return;
     } else {
-      document.location.href = `${ environment.apiUrl }/account/login`;
+      document.location.href = `${ environment.accountUrl }/auth/login`;
     }
   }
 
 
   public logout() {
     Cookies.remove(this.COOKIENAME);
+    this.isLogged = false;
+    this.loggedSubject.next(this.isLogged);
     return (Cookies.get(this.COOKIENAME) == null);
   }
 

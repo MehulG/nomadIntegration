@@ -9,13 +9,16 @@ using System.IO;
 
 namespace Api.Controllers
 {
-    public class AccountController : Controller
+    [Route("api/auth")]
+    public class AuthController : ControllerBase
     {
-        public IActionResult login(string returnUrl = "http://localhost:4200/assignment/new")
+        [Route("login")]
+        public IActionResult login(string returnUrl = "http://localhost:4200/dashboard")
         {
             return Challenge(new AuthenticationProperties() { RedirectUri = returnUrl });
         }
 
+        [Route("callback")]
         public IActionResult callback()
         {
 
@@ -28,10 +31,11 @@ namespace Api.Controllers
             return Ok("hi");
         }
 
-        public async Task<IActionResult> Logout()
-        {
-            // await _signInManager.SignOutAsync();
-            return Redirect("http://localhost:4200");
-        }
+        // [Route("")]
+        // public async Task<IActionResult> Logout()
+        // {
+        //     // await _signInManager.SignOutAsync();
+        //     return Redirect("http://localhost:4200");
+        // }
     }
 }

@@ -5,7 +5,10 @@
 export const environment = {
   production: false,
   GITHUB_API_CLIENT_ID: "a4b73bbf22cbd94d04df",
-  apiUrl: 'http://localhost:5000/api'
+  apiUrl: 'http://localhost:5000/api',
+  assignUrl: 'http://localhost:5000/api',
+  accountUrl: 'http://localhost:5001/api',
+  articleUrl: 'http://localhost:5002/api',
 
 };
 

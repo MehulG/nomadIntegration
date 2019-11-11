@@ -18,11 +18,13 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 
 
 import {AuthGuardService as AuthGuard} from './services/auth-guard.service';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent}, 
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }, 
   { path: 'editor', component: CodeEditorComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'user/:id', component: UserDetailsComponent },  

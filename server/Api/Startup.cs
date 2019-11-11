@@ -81,7 +81,7 @@ namespace Api
                 {
                     options.ClientId = "f5205a5474e5815ef359";
                     options.ClientSecret = "6ff50db80005ac25d9332a816334364d90c4e206";
-                    options.CallbackPath = new PathString("/account/callback");
+                    options.CallbackPath = new PathString("/api/auth/callback");
                     options.AuthorizationEndpoint = "https://github.com/login/oauth/authorize";
                     options.TokenEndpoint = "https://github.com/login/oauth/access_token";
                     options.ClaimsIssuer = "OAuth2-Github";

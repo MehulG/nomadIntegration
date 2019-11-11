@@ -57,6 +57,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import { JwtModule } from "@auth0/angular-jwt";
 import Cookies from 'js-cookie';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 export function tokenGetter() {
   return Cookies.get('jwt');
@@ -86,7 +87,8 @@ export function tokenGetter() {
     AssignmentNewComponent,
     FolderTreeComponent,
     FsTreeComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    DashboardComponent
   ],
 
   imports: [
@@ -120,7 +122,6 @@ export function tokenGetter() {
     FormsModule,
     MatMenuModule,
     TreeModule.forRoot(),
-    HttpClientModule,
     ReactiveFormsModule,
     MatStepperModule,
     MatAutocompleteModule,
