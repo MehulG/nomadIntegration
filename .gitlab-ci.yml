@@ -3,7 +3,7 @@ cache:
   paths:
     - node_modules/
 stages:
-  - test
+  # - test
   # - build
   - dockerize
   - deploy
@@ -24,14 +24,16 @@ stages:
 #       push
 #   tags:
 #     - cgi-w3
-backend-test:
-  image: microsoft/dotnet:2.2-sdk
-  stage: test
-  script:
-    - cd ./server/Api.Tests
-    - dotnet test
-  tags:
-    - cgi-w3
+
+# backend-test:
+#   image: microsoft/dotnet:2.2-sdk
+#   stage: test
+#   script:
+#     - cd ./server/Api.Tests
+#     - dotnet test
+#   tags:
+#     - cgi-w3
+
 # frontend-build:
 #   image: node:lts-alpine
 #   stage: build
