@@ -1,0 +1,9 @@
+<p style="margin-left: 5vw;margin-top: 2vw;">"Your search results!..."</p>
+<div *ngFor = "let item of results" class="list">
+    <mat-card class="card-styles"><a routerLink="/article/{{item.id}}">{{item.title}}</a>
+        <mat-card-content>
+            <mat-chip-list aria-label="Tags" style="float: left;" *ngFor="let tag of item.tags">
+                <mat-chip style="margin-left: 1vw;"><a routerLink="/article/tag/{{tag}}">{{tag}}</a></mat-chip>
+              </mat-chip-list>
+        </mat-card-content></mat-card>
+</div>

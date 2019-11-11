@@ -1,0 +1,33 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="true">
+    <br>
+    <div>
+         <button mat-stroked-button (click)="openDialog()" id="import">Import</button>
+   </div>
+    <div *ngFor="let item of tree">
+
+      <div class="FileStructure">
+        <div  (click)="getchild(item.path)">
+        <div (click)="display(item)" id="{{item.path}}">
+          <span *ngFor="let a of item.path.split('/')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <mat-icon *ngIf="item.type=='dir'" mat-list-icon >folder</mat-icon>
+            <mat-icon *ngIf="item.type=='file'" mat-list-icon>insert_drive_file</mat-icon>
+          {{item.name}}
+
+
+        </div>
+      </div>
+      <mat-icon mat-list-icon (click) = "hide(item.path)">highlight_off</mat-icon>
+    </div>
+
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 80vh">
+      <ngx-monaco-editor style="height: 100%;" [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+    </div>
+    
+    <button mat-raised-button color="primary" id="button" (click)="save()">Save</button>
+  </mat-sidenav-content>
+</mat-sidenav-container>

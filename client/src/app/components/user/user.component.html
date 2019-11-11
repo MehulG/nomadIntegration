@@ -1,0 +1,120 @@
+<!-- <div class="parent">
+  <div class="div1">
+    <img id="profileimg" src="https://picsum.photos/250" alt="aaaa">
+  </div>
+  <div class="div2">
+    <button mat-button color="primary" id="edit" (click)="edit()">Edit</button>
+    <header>{{user.name}}</header>
+    <span>{{user.bio}} <br> <br>{{user.email}} </span>
+    <div id="numbers">
+      <ul>
+        <li>{{UserActictivity.assignmentCreated.length}} <br><span class="sub-des"> Assignments Created</span></li>
+        <li>{{UserActictivity.articleCreated.length}}<br><span class="sub-des"> Articles Created</span></li>
+        <li>{{UserActictivity.showcase.length}} <br><span class="sub-des">Projects showcased</span> </li>
+      </ul>
+    </div>
+  </div>
+  <div class="div4">
+    <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
+      <mat-chip class="tech-chip" *ngFor="let chip of Tech" color="primary">
+        {{chip}}
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+  <div class="div3">
+    <mat-tab-group>
+      <mat-tab label="Assignment">
+        <div *ngFor="let t of title">
+          <mat-card class="card">
+            <mat-chip-list>
+              <mat-chip disabled>One</mat-chip>
+              <mat-chip disabled>Two</mat-chip>
+            </mat-chip-list>
+            <br>
+            <mat-card-header>
+              <mat-card-title>Sample</mat-card-title>
+            </mat-card-header>
+            dnasjkdnladc acklasllk sljd;kl as;sld nfdjs dklasc jsdkl asdklasd nkl
+          </mat-card>
+        </div>
+      </mat-tab>
+      <mat-tab label="Article"> Content 2 </mat-tab>
+      <mat-tab label="Showcase"> Content 3 </mat-tab>
+    </mat-tab-group>
+  </div>
+</div> -->
+<!-- <button (click) = "gettree('https://api.github.com/repos/MehulG/codebit/contents/?client_id=f08f84679de56701ddf4')">asddadasdas</button>
+<div *ngFor="let item of tree">
+  <p (click) = "getchild(item.path)">{{item.path}}</p>
+</div> -->
+<button mat-button color="primary" id="edit" (click)="edit()">Edit</button>
+<div class="flex-container">
+  <div>
+    <img id="profileimg" src= {{user.avatar}} alt="avatar">
+  </div>
+  <div id="name">{{user.name}}</div>
+  <div class="sub">{{user.bio}}</div>
+  <div class="sub">{{user.email}}</div>
+  <mat-divider></mat-divider>
+  <!-- <div id="numbers">
+    <div>{{UserActictivity.assignmentCreated.length}} <br>
+    </div>
+    <div>{{UserActictivity.articleCreated.length}} <br>
+    </div>
+    <div>{{UserActictivity.showcase.length}} <br>
+    </div>
+  </div> -->
+  <div id="tech-chips">
+    <mat-chip-list aria-label="Color selection">
+      <mat-chip class="tech-chip" *ngFor="let chip of Tech" color="primary">
+        {{chip}}
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+  <div class="div3">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="number">{{Assignments.length}}</span>
+          <span>Assignments</span> 
+        </ng-template>
+        <div *ngFor="let a of Assignments">
+          <mat-card class="card">
+            <mat-card-title>{{a.title}}</mat-card-title>
+            <!-- <img mat-card-md-image class="cardimg" src="https://picsum.photos/50"> -->
+            {{a.description}}
+          </mat-card>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="number">{{Articles.length}}</span>
+          <br><br>
+          <div>Articles</div>
+        </ng-template>
+        <div *ngFor="let a of Articles">
+            <mat-card class="card">
+              <mat-card-title>{{a.title}}</mat-card-title>
+              <img mat-card-md-image class="cardimg" src={{a.image}}>
+              {{a.content}}
+            </mat-card>
+          </div>
+  
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="number">{{Showcase.length}}</span>
+          <br><br>
+          <div>Showcased</div>
+        </ng-template>
+        <div *ngFor="let s of Showcase">
+            <mat-card class="card">
+              <mat-card-title>{{s.title}}</mat-card-title>
+              <img mat-card-md-image class="cardimg" src="https://picsum.photos/50">
+              {{s.content}}
+            </mat-card>
+          </div>
+        </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

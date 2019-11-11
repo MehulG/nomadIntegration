@@ -1,0 +1,19 @@
+<div id = "container">
+  <form class="example-form">
+      <img id="profileimg" src={{user.avatar}} alt="aaaa">
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Name" #name value="{{user.name}}">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Bio" #bio value="{{user.bio}}">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput disabled placeholder="email" #email value="{{user.email}}">
+    </mat-form-field>
+    <!-- <input type="file" (change)="onFileChanged($event)"> -->
+  </form>
+</div>
+<div id="button">
+    <button mat-raised-button color="primary" (click)="onSubmit(name.value, bio.value)">Save</button>
+</div>

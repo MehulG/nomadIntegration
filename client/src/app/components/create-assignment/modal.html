@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Hi</h1>
+<div mat-dialog-content>
+  <p>Name your Repository </p>
+  <mat-form-field>
+    <input matInput #imp>
+  </mat-form-field>
+  <p>Title </p>
+  <mat-form-field>
+    <input matInput #title>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="{repo: imp.value, title: title.value}" cdkFocusInitial>Submit</button>
+</div>

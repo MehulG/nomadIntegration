@@ -1,0 +1,40 @@
+<div id="container">
+
+  <h3 style="margin-left: 3vw;margin-top: 3vw;">New Article..</h3>
+
+  <form>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Title" #inp (change)="TitleValue(inp.value)">
+    </mat-form-field>
+
+    <mat-form-field class="example-chip-list">
+      <mat-chip-list #chipList aria-label="Tags">
+        <mat-chip *ngFor="let tag of tags" [selectable]="selectable" [removable]="removable" (removed)="remove(tag)">
+          {{tag.name}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="tags" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
+  <div id="tooltip-controls">
+  
+    </div>
+    <div id="sidebar-controls">
+        <button id="show-controls"><i class="fa fa-plus"></i></button>
+        <span class="controls">
+          <button id="image-button"><i class="fa fa-camera"></i></button>
+        </span>
+      </div>
+  <quill-editor [(ngModel)]="editorContent" [options]="editorOptions" (blur)="onEditorBlured($event)"
+    (focus)="onEditorFocused($event)" (ready)="onEditorCreated($event)" (change)="onContentChanged($event)" id="quill">
+  </quill-editor>
+
+  <!-- <div id="medium-toolbar">
+
+  </div> -->
+
+
+  <button mat-flat-button color="primary" (click)="showdata()" class="button">Publish</button>
+</div>
