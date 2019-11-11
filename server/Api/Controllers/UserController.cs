@@ -39,6 +39,25 @@ namespace Api.Controllers
 
             return entities;//dfsdfsdfsdf
         }
+
+
+        // [Authorize]
+        // [HttpGet("me", Name = "GetProfile")]
+        // public ActionResult<User> Get()
+        // {
+        //     string id = HttpContext.Users.Claims.Where(c => c.Type == "id").Value;
+            
+
+        //     var entities = _service.Get(id);
+
+        //     if (entities == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     return entities;//dfsdfsdfsdf
+        // }
+
         [HttpGet("{userid:length(24)}")]
         public ActionResult<User> GetByUserId(string userid)
         {

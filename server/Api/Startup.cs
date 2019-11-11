@@ -162,6 +162,9 @@ namespace Api
 
             services.AddSingleton<IUserService, UserService>()
                     .AddSingleton<IConfiguration>(Configuration);
+                    
+            services.AddSingleton<ITokenService, TokenService>()
+                    .AddSingleton<IConfiguration>(Configuration);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c =>

@@ -10,6 +10,7 @@ using System.IO;
 namespace Api.Controllers
 {
     [Route("api/auth")]
+    [ApiController]
     public class AuthController : ControllerBase
     {
         [Route("login")]
