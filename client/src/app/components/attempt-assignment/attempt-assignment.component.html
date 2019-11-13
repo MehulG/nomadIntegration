@@ -13,8 +13,7 @@
 <!-- /////////////////////////////////////////////////////// -->
 <div id="container">
   <mat-sidenav-container class="sidenav-container div1">
-    <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="true" id="files">
+    <mat-sidenav #drawer class="sidenav" [opened]="true" id="files">
       <br>
       <div>
         <button mat-stroked-button (click)="openDialog()" id="ProblemStatement">Problem Statement</button>
@@ -23,12 +22,15 @@
       <div *ngFor="let item of dispTree">
 
         <div class="FileStructure">
-          <div (click)="getchild(item.path)">
-            <div (click)="display(item)" id="{{item.path}}">
+          <div>
+            <div (click)="display(item)" id="{{item.path}}" >
               <span *ngFor="let a of item.path.split('/')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-              <mat-icon *ngIf="item.type=='dir'" mat-list-icon>folder</mat-icon>
-              <mat-icon *ngIf="item.type=='file'" mat-list-icon>insert_drive_file</mat-icon>
-              {{item.name}}
+              <mat-icon *ngIf="item.type=='dir'" mat-list-icon class="treeHover">folder</mat-icon>
+              <mat-icon *ngIf="item.type=='file'&& breadcrumb != item.path" mat-list-icon class="treeHover">insert_drive_file</mat-icon>
+              <mat-icon *ngIf="item.type=='file'&& breadcrumb == item.path" mat-list-icon class="treeHover colourThis">insert_drive_file</mat-icon>
+              <span class="treeHover" *ngIf = "breadcrumb != item.path">{{item.name}}</span>
+              <span class="treeHover colourThis" *ngIf = "breadcrumb == item.path">{{item.name}}</span>
+
             </div>
           </div>
           <!-- <mat-icon mat-list-icon (click) = "hide(item.path)">highlight_off</mat-icon> -->
@@ -39,15 +41,17 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
   <div id="monaco-cont" style="height: 77vh;overflow-y:scroll; overflow-x: hidden; background: #FFFFFE;">
-    <div id="breadcrumb" style=" z-index: 999999999;">>> {{breadcrumb}}</div>
-    <div *ngFor="let item of content" id="monacoId">
-      <ngx-monaco-editor *ngIf="item.editable" class="editor" id={{item.id}} [options]="editorOptions"
-        [style.height.em]="item.text.split('\n').length * 1.5" [(ngModel)]="item.text" (onInit)="onInit($event)" (onDidChangeContent) = "onDidChangeContent($event)">
-      </ngx-monaco-editor>
-      <div *ngIf="item.editable == false">
-        <div *ngFor="let newitem of item.text.split('\n')">
-          <div class="nonEdit">
-            {{newitem}}
+    <div id="breadcrumb" style="z-index: 999999999;">>> {{breadcrumb}}</div>
+    <div id="editorMain">
+      <div *ngFor="let item of content" id="monacoId">
+        <ngx-monaco-editor *ngIf="item.editable" class="editor" id={{item.id}} [options]="editorOptions"
+          [style.height.em]="item.text.split('\n').length * 1.5" [(ngModel)]="item.text" (onInit)="onInit($event)">
+        </ngx-monaco-editor>
+        <div *ngIf="item.editable == false">
+          <div *ngFor="let newitem of item.text.split('\n')">
+            <div class="nonEdit">
+              {{newitem}}
+            </div>
           </div>
         </div>
       </div>

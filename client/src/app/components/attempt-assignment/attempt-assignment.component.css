@@ -16,6 +16,9 @@
   grid-row-gap: 0px;
   width: 100%;
 }
+#editorMain{
+  margin-top: 2em;
+}
 
 #files {
   grid-area: 1 / 1 / 2 / 2;
@@ -55,6 +58,7 @@
   width: 100%;
   background:#3F51B5;
   color: white;
+  position: fixed;
 }
 
 #console {
@@ -78,3 +82,13 @@
   letter-spacing: 0px;
   background: linear-gradient(45deg, #ffdbdb 25%, #ffffff 25%, #ffffff 50%, #ffdbdb 50%, #ffdbdb 75%, #ffffff 75%, #ffffff 100%);
   background-size: 8.49px 8.49px;}
+
+.treeHover{
+  cursor: pointer;
+}
+.colourThis{
+  color: red;
+}
+.colourThis svg{
+  color: red;
+}

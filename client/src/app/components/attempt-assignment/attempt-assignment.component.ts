@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AttemptAssignmentService } from './../../services/attempt-assignment.service';
 import { CreateAssignmentService } from './../../services/create-assignment.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {HubConnectionBuilder, HubConnection, LogLevel, HttpTransportType} from '@aspnet/signalr'
 
 @Component({
   selector: 'app-attempt-assignment',
@@ -44,7 +45,15 @@ export class AttemptAssignmentComponent implements OnInit{
     editor.onDidChangeContent(e => {console.log(e);
     })
   }
-
+////////////////////////////////////////////////////////////////////
+  connection = new HubConnectionBuilder()
+  .configureLogging(LogLevel.Information)
+  .withUrl("http://localhost:5000/signalR", {
+    skipNegotiation: true,
+    transport: HttpTransportType.WebSockets
+  })
+  .build();
+////////////////////////////////////////////////////
 
 
 
@@ -53,6 +62,7 @@ export class AttemptAssignmentComponent implements OnInit{
   currentObj;
   assignmentId;
   userId;
+  attemptId;
   assignment;
   breadcrumb;
   dispTree = [];
@@ -76,6 +86,8 @@ export class AttemptAssignmentComponent implements OnInit{
             console.log(res);
             response = res;
             // console.log(res);
+            this.attemptId = response.id;
+            console.log(this.attemptId);
             this.SaveArray = response.content;
           },
           err => {
@@ -86,11 +98,17 @@ export class AttemptAssignmentComponent implements OnInit{
                 assignmentId: this.route.snapshot.params['id'],
                 userId: this.route.snapshot.params['user'],
                 content: this.SaveArray
-              }).subscribe(res => console.log('created in db')
+              }).subscribe(res => {console.log('created in db',res);
+                response = res;
+                this.attemptId = response.id;
+                console.log(this.attemptId);
+              }
               )
             }
           }
-        )
+        );
+        // console.log(this.assignment.repo);
+        
         this.createService.getFolder(this.assignment.uname, this.assignment.repo).subscribe(
           res => {
             console.log(res);
@@ -125,16 +143,25 @@ export class AttemptAssignmentComponent implements OnInit{
     var lineCount = 0;
     var readOnly = [];
     var fileText = "";
+    var prevFlag = flag;
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",this.content);
+    
     this.content.forEach(element => {
+      console.log(1111);
+      if ((flag == true) && (element.text.substr(element.text - 2) != "\n")) {
+        element.text += "\n";
+        console.log('called at position',this.content.indexOf(element));
+      }
       fileText += element.text;
-      flag = !flag;
-      if (flag == true) {
+      console.log(flag)
+      if (flag == false) {
         readOnly.push({
-          startLine: lineCount + 1,
-          endLine: lineCount + 1 + element.text.split('\n').length
+          startLine: lineCount,
+          endLine: lineCount + element.text.split('\n').length
         })
       }
       lineCount = element.text.split('\n').length;
+      flag = !flag;
     });
     
     if (this.SaveArray.length == 0) {
@@ -242,7 +269,7 @@ console.log(this.SaveArray);
 
         //////////////////////////////////////////////////
         var fileArr = this.SaveArray[this.SaveArrayContainsPath(obj.path).index].file.split('\n');
-        console.log(fileArr);
+        // console.log(fileArr);
 
         this.prevContent = this.content;
 
@@ -546,9 +573,49 @@ console.log(this.SaveArray);
       content: this.SaveArray
     }
     console.log(obj);
+    console.log('put in db');
+    
     this.attemptService.PutFromIdUid(obj).subscribe(
       res => console.log('saved in db put')
     )
+  }
+  run(){
+    // let runArr = [];
+    // this.SaveArray.forEach(element => {
+    //   // console.log(element.path);
+    //   // console.log(element.file);
+    //   runArr.push({
+    //     Content: element.file,
+    //     Path: element.path
+    //   });
+    // });
+    // this.attemptId;
+    // console.log(runArr,this.attemptId,this.assignment.uname,this.assignment.repo);
+    // this.attemptService.runPost(this.assignment.uname,this.assignment.repo,runArr,this.attemptId)
+    // .subscribe();
+
+
+///////////////////////////////////////////////////////
+    this.connection.start().then(function () {
+      console.log('Connected!');
+    }).catch(function (err) {
+      return console.error(err.toString());
+    });
+    setTimeout(() => {
+      this.connection.invoke("JoinGroup", 'groupName')
+      .then(res => console.log("Joined Group", res)).catch(err => { console.log("Error", err) })
+    }, 1000);
+    this.connection.on("ReceiveMessage", (message) => {
+      console.log("received message", message);
+      if (message == "goodBoy") {
+        this.connection.stop();
+      }
+    });
+    this.attemptService.samplePost('aap').subscribe();
+
+///////////////////////////////////////////////////////
+  
+    
   }
 
 
